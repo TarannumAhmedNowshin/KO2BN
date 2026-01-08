@@ -17,6 +17,7 @@ class Project(Base):
     
     # Relationships
     sessions = relationship("MeetingSession", back_populates="project")
+    documents = relationship("Document", back_populates="project")
     
     def __repr__(self):
         return f"<Project {self.name}>"

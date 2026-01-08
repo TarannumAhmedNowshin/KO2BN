@@ -11,6 +11,7 @@ import CreateSession from './pages/CreateSession';
 import JoinSession from './pages/JoinSession';
 import PhysicalMeetingPage from './pages/PhysicalMeetingPage';
 import ArchivePage from './pages/ArchivePage';
+import DocumentsPage from './pages/DocumentsPage';
 import './App.css';
 
 function App() {
@@ -41,6 +42,14 @@ function App() {
             element={
               <PrivateRoute>
                 <GlossaryPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/documents"
+            element={
+              <PrivateRoute>
+                <DocumentsPage />
               </PrivateRoute>
             }
           />

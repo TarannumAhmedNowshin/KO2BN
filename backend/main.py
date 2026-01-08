@@ -1,7 +1,7 @@
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from database import init_db, get_db
-from api import auth, translation, glossary, projects, admin, analytics, sessions, archive
+from api import auth, translation, glossary, projects, admin, analytics, sessions, archive, documents
 from api.websocket import handle_websocket
 from config import settings
 
@@ -57,6 +57,7 @@ app.include_router(admin.router)
 app.include_router(analytics.router)
 app.include_router(sessions.router)
 app.include_router(archive.router)
+app.include_router(documents.router)
 
 
 # WebSocket endpoint for real-time translation

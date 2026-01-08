@@ -19,6 +19,7 @@ class User(Base):
     # Relationships
     created_sessions = relationship("MeetingSession", back_populates="creator")
     transcripts = relationship("Transcript", back_populates="user")
+    documents = relationship("Document", back_populates="user", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<User {self.username} ({self.role})>"

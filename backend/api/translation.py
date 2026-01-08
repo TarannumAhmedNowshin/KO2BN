@@ -7,10 +7,18 @@ from utils.dependencies import get_current_user
 from models.user import User
 from models.translation import Translation
 from models.glossary import Glossary
+from models.document import Document
 from schemas.translation import TranslationRequest, TranslationResponse, TranslationHistoryItem
 from database import get_db
+import os
+import time
+from pathlib import Path
 
 router = APIRouter(prefix="/api/translate", tags=["Translation"])
+
+# Configure upload directory
+UPLOAD_DIR = Path(__file__).parent.parent / "uploads"
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 
 @router.post("/", response_model=TranslationResponse)
@@ -221,6 +229,39 @@ async def translate_document(
         db.commit()
         db.refresh(translation)
         
+        # Save the uploaded file
+        user_upload_dir = UPLOAD_DIR / str(current_user.id)
+        user_upload_dir.mkdir(exist_ok=True)
+        
+        # Generate unique filename
+        timestamp = int(time.time())
+        file_extension = file.filename.split('.')[-1]
+        unique_filename = f"{timestamp}_{file.filename}"
+        file_path = user_upload_dir / unique_filename
+        
+        # Write file to disk
+        with open(file_path, "wb") as f:
+            f.write(file_content)
+        
+        # Create document record
+        document = Document(
+            user_id=current_user.id,
+            project_id=project_id,
+            filename=unique_filename,
+            original_filename=file.filename,
+            file_path=f"{current_user.id}/{unique_filename}",
+            file_type=file_extension,
+            file_size=len(file_content),
+            source_lang=source_lang,
+            target_lang=target_lang,
+            extracted_text=extracted_text,
+            translated_text=result["translated_text"],
+            translation_id=translation.id
+        )
+        db.add(document)
+        db.commit()
+        db.refresh(document)
+        
         return {
             "id": translation.id,
             "original_text": extracted_text,
@@ -228,7 +269,8 @@ async def translate_document(
             "source_lang": source_lang,
             "target_lang": target_lang,
             "confidence": result["confidence"],
-            "created_at": translation.created_at
+            "created_at": translation.created_at,
+            "document_id": document.id
         }
     
     except ValueError as e:

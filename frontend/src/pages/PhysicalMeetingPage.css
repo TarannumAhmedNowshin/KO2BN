@@ -1,6 +1,123 @@
-.meeting-container {
+/* Meeting Layout */
+.meeting-wrapper {
+  display: flex;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #0f0f0f;
+  border-right: 1px solid #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid #1f1f1f;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+}
+
+.logo-text h1 {
+  font-size: 1.25rem;
+  margin: 0;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.logo-text span {
+  font-size: 0.75rem;
+  color: #00BCD4;
+  display: block;
+  margin-top: -2px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: left;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.nav-item:hover {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.nav-item.active {
+  background-color: #00BCD4;
+  color: #ffffff;
+  position: relative;
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #fff;
+}
+
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.nav-item.sign-out {
+  margin-top: auto;
+  border-top: 1px solid #1f1f1f;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  margin-left: 240px;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
 }
 
@@ -8,16 +125,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: #0f0f0f;
+  border: 1px solid #2a2a2a;
   padding: 20px 30px;
   border-radius: 12px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .meeting-info h1 {
   margin: 0 0 10px 0;
-  color: #2d3748;
+  color: #ffffff;
   font-size: 24px;
 }
 
@@ -31,10 +148,11 @@
   font-family: 'Courier New', monospace;
   font-size: 20px;
   font-weight: bold;
-  color: #4a5568;
-  background: #edf2f7;
+  color: #00BCD4;
+  background: rgba(0, 188, 212, 0.1);
   padding: 8px 16px;
   border-radius: 6px;
+  border: 1px solid rgba(0, 188, 212, 0.3);
 }
 
 .connection-status {
@@ -45,32 +163,38 @@
 }
 
 .connection-status.connected {
-  color: #22c55e;
-  background: #dcfce7;
+  color: #4CAF50;
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
 .connection-status.disconnected {
-  color: #ef4444;
-  background: #fee2e2;
+  color: #F44336;
+  background: rgba(244, 67, 54, 0.15);
+  border: 1px solid rgba(244, 67, 54, 0.3);
 }
 
 .btn-danger {
-  background: #ef4444;
+  background: #F44336;
   color: white;
   border: none;
   padding: 10px 24px;
   border-radius: 8px;
   font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
 .btn-danger:hover {
-  background: #dc2626;
+  background: #D32F2F;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
 }
 
 .error-box {
-  background: white;
+  background: #0f0f0f;
+  border: 1px solid #2a2a2a;
   padding: 40px;
   border-radius: 12px;
   text-align: center;
@@ -79,23 +203,35 @@
 }
 
 .error-box h2 {
-  color: #ef4444;
+  color: #F44336;
   margin-bottom: 15px;
 }
 
+.error-box p {
+  color: #888;
+  margin-bottom: 20px;
+}
+
 .error-box button {
-  margin-top: 20px;
-  background: #667eea;
+  background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
   color: white;
   border: none;
   padding: 10px 24px;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.error-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 188, 212, 0.4);
 }
 
 .error-banner {
-  background: #fee2e2;
-  color: #dc2626;
+  background: rgba(244, 67, 54, 0.15);
+  color: #F44336;
+  border: 1px solid rgba(244, 67, 54, 0.3);
   padding: 12px 20px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -107,14 +243,14 @@
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 20px;
-  height: calc(100vh - 200px);
+  flex: 1;
 }
 
 .controls-panel {
-  background: white;
+  background: #0f0f0f;
+  border: 1px solid #2a2a2a;
   border-radius: 12px;
   padding: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -128,21 +264,27 @@
 
 .speaker-input label {
   font-weight: 600;
-  color: #2d3748;
+  color: #ffffff;
   font-size: 14px;
 }
 
 .speaker-input input {
   padding: 12px;
-  border: 2px solid #e2e8f0;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
   border-radius: 8px;
   font-size: 16px;
+  color: #ffffff;
   transition: border-color 0.2s;
 }
 
 .speaker-input input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #00BCD4;
+}
+
+.speaker-input input::placeholder {
+  color: #666;
 }
 
 .record-button {
@@ -154,24 +296,23 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
-  background: #667eea;
+  background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
   color: white;
   user-select: none;
 }
 
 .record-button:hover:not(:disabled) {
-  background: #5568d3;
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 12px rgba(0, 188, 212, 0.4);
 }
 
 .record-button.recording {
-  background: #ef4444;
+  background: #F44336;
   animation: pulse 1.5s infinite;
 }
 
 .record-button:disabled {
-  background: #cbd5e0;
+  background: #333;
   cursor: not-allowed;
   opacity: 0.6;
 }
@@ -187,16 +328,16 @@
 
 .record-hint {
   text-align: center;
-  color: #718096;
+  color: #888;
   font-size: 14px;
   margin: 0;
 }
 
 .transcripts-panel {
-  background: white;
+  background: #0f0f0f;
+  border: 1px solid #2a2a2a;
   border-radius: 12px;
   padding: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -204,7 +345,7 @@
 
 .transcripts-panel h2 {
   margin: 0 0 20px 0;
-  color: #2d3748;
+  color: #ffffff;
   font-size: 22px;
 }
 
@@ -219,15 +360,16 @@
 .transcript-column {
   display: flex;
   flex-direction: column;
-  border: 2px solid #e2e8f0;
+  border: 1px solid #2a2a2a;
   border-radius: 8px;
   overflow: hidden;
+  background: #1a1a1a;
 }
 
 .transcript-column h3 {
   margin: 0;
   padding: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
   color: white;
   font-size: 16px;
   text-align: center;
@@ -243,21 +385,21 @@
 }
 
 .transcript-message {
-  background: #f7fafc;
+  background: #0f0f0f;
   padding: 12px;
   border-radius: 8px;
-  border-left: 3px solid #667eea;
+  border-left: 3px solid #00BCD4;
 }
 
 .message-speaker {
   font-weight: 600;
-  color: #4a5568;
+  color: #00BCD4;
   font-size: 12px;
   margin-bottom: 4px;
 }
 
 .message-text {
-  color: #2d3748;
+  color: #cccccc;
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 4px;
@@ -265,7 +407,7 @@
 
 .message-time {
   font-size: 11px;
-  color: #a0aec0;
+  color: #666;
   text-align: right;
 }
 
@@ -275,21 +417,25 @@
 }
 
 .transcript-messages::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #1a1a1a;
   border-radius: 10px;
 }
 
 .transcript-messages::-webkit-scrollbar-thumb {
-  background: #cbd5e0;
+  background: #333;
   border-radius: 10px;
 }
 
 .transcript-messages::-webkit-scrollbar-thumb:hover {
-  background: #a0aec0;
+  background: #444;
 }
 
 /* Responsive design */
 @media (max-width: 1200px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
   .meeting-content {
     grid-template-columns: 1fr;
   }

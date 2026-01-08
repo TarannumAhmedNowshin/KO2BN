@@ -85,10 +85,23 @@ const ArchivePage = () => {
   const highlightText = (text, query) => {
     if (!text || !query) return text;
     
-    const parts = text.split(new RegExp(`(${query})`, 'gi'));
-    return parts.map((part, index) => 
-      part.toLowerCase() === query.toLowerCase() ? 
-        <mark key={index}>{part}</mark> : part
+    // Simple case-insensitive text splitting
+    const lowerText = text.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+    const index = lowerText.indexOf(lowerQuery);
+    
+    if (index === -1) return text;
+    
+    const before = text.substring(0, index);
+    const match = text.substring(index, index + query.length);
+    const after = text.substring(index + query.length);
+    
+    return (
+      <>
+        {before}
+        <mark>{match}</mark>
+        {after.includes(query) ? highlightText(after, query) : after}
+      </>
     );
   };
   

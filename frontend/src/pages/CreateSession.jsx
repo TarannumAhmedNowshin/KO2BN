@@ -11,6 +11,7 @@ const CreateSession = () => {
   const [sessionCode, setSessionCode] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     fetchProjects();
@@ -51,7 +52,8 @@ const CreateSession = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(sessionCode);
-    alert('Session code copied to clipboard!');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const shareUrl = sessionCode ? `${window.location.origin}/meeting/${sessionCode}` : '';
@@ -68,7 +70,7 @@ const CreateSession = () => {
               {sessionCode}
             </div>
             <button onClick={copyToClipboard} className="btn-secondary">
-              📋 Copy Code
+              {copied ? '✓ Copied!' : '📋 Copy Code'}
             </button>
           </div>
 

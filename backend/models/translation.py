@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 from database import Base
 
 
@@ -16,6 +17,9 @@ class Translation(Base):
     source_text = Column(Text, nullable=False)
     translated_text = Column(Text, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+    # Relationships
+    document = relationship("Document", back_populates="translation", uselist=False)
     
     def __repr__(self):
         return f"<Translation {self.source_lang}→{self.target_lang} by user {self.user_id}>"
